@@ -49,8 +49,6 @@ function sendOTP($GENERATED_OTP)
 
 $OTP = generateOTP();
 sendOTP($OTP);
-
-var_dump($OTP);
 ?>
 
 
