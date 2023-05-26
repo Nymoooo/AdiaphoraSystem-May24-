@@ -5,7 +5,7 @@
 *{
    
    font-family: 'Poppins', sans-serif;
-   margin:0; padding:0;
+   margin: 50px; padding: 0;
    box-sizing: border-box;
    outline: none; border:none;
    text-decoration: none;
@@ -17,7 +17,7 @@
    align-items: center;
    justify-content: center;
    padding:20px;
-   padding-bottom: 60px;
+   padding-bottom: 20px;
 }
 
 .container .content{
@@ -26,7 +26,7 @@
 
 .container .content h3{
    font-size: 30px;
-   color:#333;
+   color:#000000;
 }
 
 .container .content h3 span{
@@ -38,7 +38,7 @@
 
 .container .content h1{
    font-size: 50px;
-   color:#333;
+   color:#000000;
 }
 
 .container .content h1 span{
@@ -64,15 +64,6 @@
    background: rgb(0, 66, 11);
 }
 
-.form-container{
-   min-height: 100vh;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   padding:20px;
-   padding-bottom: 60px;
-   background: #eee;
-}
 
 .form-container form{
    padding:20px;
@@ -87,26 +78,26 @@
    font-size: 30px;
    text-transform: uppercase;
    margin-bottom: 10px;
-   color:#333;
+   color:#000000;
 }
-
+   /*boxes in register form */
 .form-container form input,
 .form-container form select{
    width: 100%;
-   padding:10px 15px;
+   padding:15px 15px;
    font-size: 17px;
    margin:8px 0;
-   background: #eee;
+   background: #b8cabd;
    border-radius: 5px;
 }
 
 .form-container form select option{
    background: #fff;
 }
-
+  /*register button */
 .form-container form .form-btn{
-   background: #00ff55;
-   color:rgb(20, 220, 30);
+   background: #1a8f2d;
+   color:rgb(255, 255, 255);
    text-transform: capitalize;
    font-size: 20px;
    cursor: pointer;
@@ -120,7 +111,7 @@
 .form-container form p{
    margin-top: 10px;
    font-size: 20px;
-   color:#333;
+   color:#000000;
 }
 
 .form-container form p a{
@@ -1411,6 +1402,8 @@ section{
    width: 100%;
    margin: 1rem 0;
 }
+
+
 
 
 

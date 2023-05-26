@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
          <input type="password" name="password" id="password" required placeholder="Enter your password">
          <input type="password" name="cpassword" id="cpassword" required placeholder="Confirm your password">
          <button type="button" onclick="showPassword()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
-             Show password
+            <p hidden>  Show password </p>
          </button>
       </div>
 
@@ -126,6 +126,7 @@ if (isset($_POST['submit'])) {
          <option value="admin">PROFESSOR</option>
       </select>
       <input type="submit" name="submit" value="Register" class="form-btn">
+      <p><a href="terms.html">Terms and Conditions </a></p>
       <p>Already have an account? <a href="login_form.php">Login Now</a></p>
    </form>
 

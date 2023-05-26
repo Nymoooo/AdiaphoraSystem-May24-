@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2023 at 04:43 PM
+-- Generation Time: May 26, 2023 at 11:15 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -82,6 +82,28 @@ INSERT INTO `user_form` (`id`, `last_name`, `first_name`, `middle_name`, `email`
 (11, '321', '123', '312', '123@gmail.com', '876dfefef3ef6f4548f48bbddd856cef', 'user'),
 (12, 'Last', 'First', 'Mid', 'First@gmail.com', '876dfefef3ef6f4548f48bbddd856cef', 'user');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_scores`
+--
+
+CREATE TABLE `user_scores` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `quiz_id` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_scores`
+--
+
+INSERT INTO `user_scores` (`id`, `user_id`, `quiz_id`, `score`, `timestamp`) VALUES
+(1, 0, 0, 0, '2023-05-25 06:37:29'),
+(2, 0, 0, 0, '2023-05-25 06:38:57');
+
 --
 -- Indexes for dumped tables
 --
@@ -99,6 +121,12 @@ ALTER TABLE `user_form`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_scores`
+--
+ALTER TABLE `user_scores`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -113,6 +141,12 @@ ALTER TABLE `questions`
 --
 ALTER TABLE `user_form`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `user_scores`
+--
+ALTER TABLE `user_scores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
