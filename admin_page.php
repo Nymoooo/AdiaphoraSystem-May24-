@@ -13,83 +13,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $question = $_POST["question"];
     $questionType = $_POST["questionType"];
 
-    if ($questionType == "multiple_choice") {
-        $option1 = $_POST["option1"];
-        $option2 = $_POST["option2"];
-        $option3 = $_POST["option3"];
-        $option4 = $_POST["option4"];
-        $answer = $_POST["answer"];
+    // Create database connection
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "user_db";
 
-        // Create database connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-        // Check if the question already exists in the database
-        $checkQuery = "SELECT * FROM questions WHERE question = ?";
-        $stmt = $conn->prepare($checkQuery);
-        $stmt->bind_param("s", $question);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    // Check if the question already exists in the database
+    $checkQuery = "SELECT * FROM questions WHERE question = ?";
+    $stmt = $conn->prepare($checkQuery);
+    $stmt->bind_param("s", $question);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $error = "Question already exists.";
-        } else {
+    if ($result->num_rows > 0) {
+        $error = "Question already exists.";
+    } else {
+        if ($questionType == "multiple_choice") {
+            $option1 = $_POST["option1"];
+            $option2 = $_POST["option2"];
+            $option3 = $_POST["option3"];
+            $option4 = $_POST["option4"];
+            $answer = $_POST["answer"];
+
             // Prepare and bind the statement
             $insertQuery = "INSERT INTO questions (question, option1, option2, option3, option4, answer) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($insertQuery);
             $stmt->bind_param("ssssss", $question, $option1, $option2, $option3, $option4, $answer);
+        } elseif ($questionType == "true_false") {
+            $answer = $_POST["answer_tf"];
 
-            // Execute the statement
-            if ($stmt->execute() === TRUE) {
-                $error = "Question added successfully.";
-            } else {
-                $error = "Error: " . $stmt->error;
-            }
-        }
-
-        $stmt->close();
-        $conn->close();
-    } elseif ($questionType == "true_false") {
-        $answer = $_POST["answer_tf"];
-
-        // Create database connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // Check if the question already exists in the database
-        $checkQuery = "SELECT * FROM questions WHERE question = ?";
-        $stmt = $conn->prepare($checkQuery);
-        $stmt->bind_param("s", $question);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $error = "Question already exists.";
-        } else {
             // Prepare and bind the statement
             $insertQuery = "INSERT INTO questions (question, answer) VALUES (?, ?)";
             $stmt = $conn->prepare($insertQuery);
             $stmt->bind_param("ss", $question, $answer);
-
-            // Execute the statement
-            if ($stmt->execute() === TRUE) {
-                $error = "Question added successfully.";
-            } else {
-                $error = "Error: " . $stmt->error;
-            }
         }
 
-        $stmt->close();
-        $conn->close();
+        // Execute the statement
+        if ($stmt->execute()) {
+            $error = "Question added successfully.";
+        } else {
+            $error = "Error: " . $stmt->error;
+        }
     }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
 
@@ -111,13 +87,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="content">
         <h3>Hi, <span>Professor</span></h3>
-        <h1>Welcome <span><?php echo $_SESSION['admin_name'] ?></span></h1>
+        <h1>Welcome <span><?php echo $_SESSION['admin_name']; ?></span></h1>
         <p>This is a Professor page</p>
 
         <a href="logout.php" class="btn">Logout</a>
 
         <h2>Quiz Maker</h2>
-        <form action="" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <label for="question">Question:</label>
             <input type="text" name="question" id="question" required><br><br>
 
@@ -127,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="true_false">True/False</option>
             </select><br><br>
 
-            <div id="multipleChoiceOptions">
+            <div id="multipleChoiceOptions" style="display: none;">
                 <label for="option1">Option 1:</label>
                 <input type="text" name="option1" id="option1" required><br>
 
@@ -144,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="number" name="answer" id="answer" required><br><br>
             </div>
 
-            <div id="trueFalseOptions">
+            <div id="trueFalseOptions" style="display: none;">
                 <label for="answer_tf">Answer:</label><br>
                 <input type="radio" name="answer_tf" id="true" value="True" required>
                 <label for="true">True</label><br>
