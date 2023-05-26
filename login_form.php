@@ -14,16 +14,16 @@ if(isset($_POST['submit'])){
    $result = mysqli_query($conn, $select);
 
    if(mysqli_num_rows($result) > 0){
-
       $row = mysqli_fetch_array($result);
 
       if($row['user_type'] == 'admin'){
          $_SESSION['admin_name'] = $row['first_name'] . ' ' . $row['last_name'];
+         header("location:OTP.php?Email={$email}&NextLocation=admin_page.php");
          header('location:admin_page.php');
       }
       elseif($row['user_type'] == 'user'){
          $_SESSION['user_name'] = $row['first_name'] . ' ' . $row['last_name'];
-         header('location:user_page.php');
+         header("location:OTP.php?Email={$email}&NextLocation=user_page.php");
       }
      
    }else{
